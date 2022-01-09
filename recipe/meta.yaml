@@ -10,7 +10,7 @@ source:
   sha256: 5fcdf0eda828fbaf4b3d31ba89b5011f649df3a7ef0cc7520d08fe481cac4e9f
 
 build:
-  number: 0
+  number: 1
   skip: True  # [win]
 
 requirements:
@@ -32,3 +32,4 @@ about:
 extra:
   recipe-maintainers:
     - isuruf
+    - ngam

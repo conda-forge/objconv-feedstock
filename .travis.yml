@@ -3,20 +3,20 @@
 
 language: generic
 
-env:
-  global:
-    # The BINSTAR_TOKEN secure variable. This is defined canonically in conda-forge.yml.
-    - secure: "GgiuB66UNrGzAVnIlwM1PKQGZa0dMX5QTWTJATEJa3xtSTSdCVruD8K1mN5CWyst8oRa2FLobO5/qDW+7Ejg1hVHoOvSSShzr4DZr7rbPwRbUKXWG5taTJluQodNqp2kZuLs/RCUpdOLWTBZTx8wKSSf13g3HNEb33SmbmvWvwKC1eNac53OOCDvDpupsjkv7n6RyRUqQDsE2veGH37XHz9dT/cb+8TkSkjvBYaol4fudigm6zKkVGSlHIXHBBib/JkXP3T6OZ17SJKyFxNovLIwq/Ju29TENgspalGEU71Bei4yKG5tiHQFQFIgtolQrPaEj+EkUahZ1nM9No35MAbz/IFCGVBrsxaY1/rXzIfF5GUVKwZO+us0cPAErHENCewD36L09L3nCdfDHvZWhReJv/Py6Bl6z3c/cO9GPCoaQF80MvVXSbfATptBCD/lfa01cRbYKQTeSBBR6Fyp/zAelVbS72vohVT5i+bjGlNbIXand0pQWtjTCL/jh+cJBgeUasbxNs9DdS2IZTnaidZ5f6gyIE1PoJMVH33/ZvcUaotpKAhhfpqwMSxiU07hK9B7REst6nEtEOpzr9W1eA41FJBCXF3XULInAod2GMwcuc2W35GK2GapnGDSEKG2Qt2WJJ2sBvtt//ipIeJJTOmJQdFR2AmVIh6DUFmgLYU="
+
 
 matrix:
   include:
-    - env: CONFIG=linux_ppc64le_ UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+    - env: CONFIG=linux_ppc64le_ UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le
       os: linux
       arch: ppc64le
+      dist: focal
 
 script:
   - export CI=travis
   - export GIT_BRANCH="$TRAVIS_BRANCH"
+  - export FEEDSTOCK_NAME=$(basename ${TRAVIS_REPO_SLUG})
+  - if [[ "${TRAVIS_PULL_REQUEST:-}" == "false" ]]; then export IS_PR_BUILD="False"; else export IS_PR_BUILD="True"; fi
 
 
-  - if [[ ${PLATFORM} =~ .*linux.* ]]; then ./.scripts/run_docker_build.sh; fi
+  - if [[ ${PLATFORM} =~ .*linux.* ]]; then CONDA_FORGE_DOCKER_RUN_ARGS=--network=host ./.scripts/run_docker_build.sh; fi

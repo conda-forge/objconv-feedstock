@@ -1,5 +1,5 @@
 {% set name = "objconv" %}
-{% set version = "2.49" %}
+{% set version = "2.53" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/staticfloat/objconv/archive/v{{ version }}.tar.gz
-  sha256: 5fcdf0eda828fbaf4b3d31ba89b5011f649df3a7ef0cc7520d08fe481cac4e9f
+  sha256: a8caa9aaa7d1a9a836eef2f1da6a26cd6e65d046dc0f057eebac930baba7801c
 
 build:
   number: 1
